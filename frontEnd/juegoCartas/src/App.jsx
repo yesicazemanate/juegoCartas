@@ -1,35 +1,68 @@
- import {BrowserRouter, Routes, Route } from "react-router-dom"
- import Login from "./pages/login";
-import Sidebar from "./components/sidebar";
-import Home from "./pages/home";
-import CrearPartida from "./pages/CrearPartida";
-import IniciarPartida from "./pages/IniciarPartida";
-import CerrarSesion from "./pages/CerrarSesion";
+// src/App.js
+import { useContext } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Login from './pages/login';
+import Sidebar from './components/sidebar';
+import { AuthContext } from './context/autenticacion';
+import Home from './pages/home';
+import CrearPartida from './pages/CrearPartida';
+import IniciarPartida from './pages/IniciarPartida';
+import CerrarSesion from './pages/CerrarSesion';
+import ProtectedRoute from './pages/RutasProtegidas';
+
 function App() {
+  const { isAuthenticated } = useContext(AuthContext);
 
   return (
-  <BrowserRouter>
-  <div className="flex flex-row pt-8 pl-8 h-screen">
-    <div className="flex justify-center items-center">
-    <Sidebar />
-    </div>
-        
-        <div style={{ marginLeft: '10px', padding: '20px', width: '100%' }}>
-          <Routes>
-            <Route path="/home" element={<Home />} />
-            <Route path="/Crearpartida" element={<CrearPartida />} />
-            <Route path="/Iniciarpartida" element={<IniciarPartida />} />
-            <Route path="/CerrarSesion" element={<CerrarSesion/>}/>
+    <BrowserRouter>
+      <div className="flex flex-row pt-8 pl-8 h-screen">
+        {isAuthenticated && (
+          <div className="flex justify-center items-center">
+            <Sidebar />
+          </div>
+        )}
 
-            {/* Demas rutas se añaden aca */}
-            <Route path="/login" element={<Login/>}/>
+        <div className='ml-5 p-14 w-full'>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route
+              path="/home"
+              element={
+                <ProtectedRoute>
+                  <Home />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/Crearpartida"
+              element={
+                <ProtectedRoute>
+                  <CrearPartida />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/Iniciarpartida"
+              element={
+                <ProtectedRoute>
+                  <IniciarPartida />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/CerrarSesion"
+              element={
+                <ProtectedRoute>
+                  <CerrarSesion />
+                </ProtectedRoute>
+              }
+            />
+            {/* Otras rutas protegidas */}
           </Routes>
         </div>
       </div>
-  </BrowserRouter>
-  // <Sidebar/>
-  
-  )
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
