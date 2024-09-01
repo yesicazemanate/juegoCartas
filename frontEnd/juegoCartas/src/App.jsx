@@ -1,5 +1,5 @@
  import {BrowserRouter, Routes, Route } from "react-router-dom"
-// import Login from "./pages/login";
+ import Login from "./pages/login";
 import Sidebar from "./components/sidebar";
 import Home from "./pages/home";
 import CrearPartida from "./pages/CrearPartida";
@@ -18,6 +18,9 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/Crearpartida" element={<CrearPartida />} />
             <Route path="/Iniciarpartida" element={<IniciarPartida />} />
+
+            {/* Demas rutas se añaden aca */}
+            <Route path="/login" element={<Login/>}/>
           </Routes>
         </div>
       </div>
