@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+
 const EncriptacionContra = async (password) => {
     const salt = await bcrypt.genSalt(10);
     const encriptada = await bcrypt.hash(password, salt);
@@ -8,7 +9,7 @@ const EncriptacionContra = async (password) => {
     return await bcrypt.compare(contraEntrada, Password);
 };
 
-export{
+export {
     EncriptacionContra,
     ComparacionContra
 }

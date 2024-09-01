@@ -8,7 +8,16 @@ const JWT_SECRET = 'tu_clave_secreta';
     };
     return jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
 };
-
+const verifyToken =(jwt)=>{
+    try{
+        const isVerify=jwt.verify(jwt, JWT_SECRET)
+        return isVerify
+    }catch(error){
+        console.error('token verification failed', error)
+        return null
+    }
+}
 export{
-    GenerarToken
+    GenerarToken,
+    verifyToken
 }
