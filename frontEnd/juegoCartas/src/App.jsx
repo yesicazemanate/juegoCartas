@@ -4,6 +4,7 @@ import Sidebar from "./components/sidebar";
 import Home from "./pages/home";
 import CrearPartida from "./pages/CrearPartida";
 import IniciarPartida from "./pages/IniciarPartida";
+import CerrarSesion from "./pages/CerrarSesion";
 function App() {
 
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/Crearpartida" element={<CrearPartida />} />
             <Route path="/Iniciarpartida" element={<IniciarPartida />} />
+            <Route path="/CerrarSesion" element={<CerrarSesion/>}/>
 
             {/* Demas rutas se añaden aca */}
             <Route path="/login" element={<Login/>}/>

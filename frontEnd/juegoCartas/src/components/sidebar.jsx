@@ -7,6 +7,7 @@ const Sidebar=()=> {
         <li><Link to="/home">Home</Link></li>
         <li><Link to="/Crearpartida">Crear Partida</Link></li>
         <li><Link to="/Iniciarpartida">Iniciar Partida</Link></li>
+        <li><Link to="/CerrarSesion">Cerrar Sesion</Link></li>
       </ul>
     </div>
     </div>
