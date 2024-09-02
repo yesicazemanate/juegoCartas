@@ -8,6 +8,7 @@ import CrearPartida from './pages/CrearPartida';
 import IniciarPartida from './pages/IniciarPartida';
 import CerrarSesion from './pages/CerrarSesion';
 import { Register } from './components/reggister';
+import Pruebaa from "./pages/PruebaCAMBIONUMERO";
 
 const ProtectedRoute = ({ element }) => {
   const { isAuthenticated } = useContext(AuthContext);
@@ -56,7 +57,10 @@ function App() {
               path="/cerrarsesion"
               element={<ProtectedRoute element={<CerrarSesion />} />}
             />
-
+             <Route
+              path="/pruebaa"
+              element={<ProtectedRoute element={<Pruebaa />} />}
+            />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </div>

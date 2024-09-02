@@ -1,13 +1,22 @@
 
+import { number } from "prop-types";
 import TotalDeJugadores from "../components/TotalDeJugadores";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 const IniciarPartida = () => {
-   const [modal, setModal] = useState({isOpen:false, number: null})
+   const navigate = useNavigate()
+   const [modall, setModal] = useState({isOpen:false, number: null})
    const abrirModal =(number)=>{
       setModal({isOpen:true, number})
    }
    const cerrarModal=()=>{
       setModal({isOpen:false, number:null})
+   }
+   const unirse =()=>{
+      if (modall.number !== null) {
+         localStorage.setItem("TotalJugadoresParaUnirse: ",modall.number);
+         navigate('/pruebaa')
+      }
    }
     return(
       <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-gray-100 to-gray-300">
@@ -25,14 +34,14 @@ const IniciarPartida = () => {
           </div>
 
       </div>
-      {modal.isOpen && (
+      {modall.isOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg">
             <h2 className="text-xl font-semibold mb-4">Detalles de la partida</h2>
-            <p>Total de jugadores {modal.number}.</p>
+            <p>Total de jugadores {modall.number}.</p>
             <p>Creado por: </p>
             <button
-              onClick={cerrarModal}
+              onClick={unirse}
               className="mr-8 mt-4 bg-blue-500 text-white px-4 py-2 rounded"
             >Unirme</button>
             <button

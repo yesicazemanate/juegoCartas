@@ -1,6 +1,8 @@
 import TotalDeJugadores from "../components/TotalDeJugadores";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 const CrearPartida = () => {
+   const navigate = useNavigate()
    const [modal, setModal] = useState({open:false, number:null})
    const abrir = (number)=>{
       setModal({open:true, number})
@@ -8,13 +10,18 @@ const CrearPartida = () => {
    const cerrar = ()=>{
       setModal({open:false, number:null})
    }
+   const aceptar =()=>{
+      if(modal.number !== null){
+         localStorage.setItem("Numero de jugadores: " , modal.number)
+         navigate('/pruebaa')
+      }
+   }
    return (
        <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-gray-100 to-gray-300">
            <div className="w-5/6 max-w-5xl bg-white shadow-lg rounded-3xl p-8 flex flex-col items-center">
                <h2 className="text-center font-semibold text-2xl text-gray-700 mb-6">Crear Partida</h2>
                
                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
-                   <TotalDeJugadores number="1" modal={abrir} />
                    <TotalDeJugadores number="2" modal={abrir} />
                    <TotalDeJugadores number="3" modal={abrir} />
                    <TotalDeJugadores number="4" modal={abrir}/>
@@ -30,7 +37,7 @@ const CrearPartida = () => {
                  <h2 className="text-xl font-semibold mb-4">¿Estas seguro de crear la partida? </h2>
                  <p>Total de jugadores {modal.number}.</p>
                  <button
-                   onClick={cerrar}
+                   onClick={aceptar}
                    className="mr-8 mt-4 bg-blue-500 text-white px-4 py-2 rounded"
                  >Aceptar</button>
                  <button
