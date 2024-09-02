@@ -1,63 +1,63 @@
-// src/App.js
 import { useContext } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/login';
+//import Registro from './pages/registro'; // Supongamos que también tienes una página de registro
 import Sidebar from './components/sidebar';
 import { AuthContext } from './context/autenticacion';
 import Home from './pages/home';
 import CrearPartida from './pages/CrearPartida';
 import IniciarPartida from './pages/IniciarPartida';
 import CerrarSesion from './pages/CerrarSesion';
-import ProtectedRoute from './pages/RutasProtegidas';
+
+const ProtectedRoute = ({ element }) => {
+  const { isAuthenticated } = useContext(AuthContext);
+  return isAuthenticated ? element : <Navigate to="/" />;
+};
+
+const PublicRoute = ({ element }) => {
+  const { isAuthenticated } = useContext(AuthContext);
+  return !isAuthenticated ? element : <Navigate to="/home" />;
+};
 
 function App() {
   const { isAuthenticated } = useContext(AuthContext);
 
   return (
     <BrowserRouter>
-      <div className="flex flex-row pt-8 pl-8 h-screen">
+      <div className="ml-0 flex flex-row h-screen">
         {isAuthenticated && (
-          <div className="flex justify-center items-center">
+          <div className="w-52 h-full">
             <Sidebar />
           </div>
         )}
 
-        <div className='ml-5 p-14 w-full'>
+        <div
+          style={{ marginLeft: isAuthenticated ? '0%' : '0%', padding: '7px', width: '100%' }}
+        >
           <Routes>
-            <Route path="/" element={<Login />} />
+      
+            <Route path="/" element={<PublicRoute element={<Login />} />} />
+            {/* <Route path="/registro" element={<PublicRoute element={<Registro />} />} /> */}
+
+        
             <Route
               path="/home"
-              element={
-                <ProtectedRoute>
-                  <Home />
-                </ProtectedRoute>
-              }
+              element={<ProtectedRoute element={<Home />} />}
             />
             <Route
-              path="/Crearpartida"
-              element={
-                <ProtectedRoute>
-                  <CrearPartida />
-                </ProtectedRoute>
-              }
+              path="/crearpartida"
+              element={<ProtectedRoute element={<CrearPartida />} />}
             />
             <Route
-              path="/Iniciarpartida"
-              element={
-                <ProtectedRoute>
-                  <IniciarPartida />
-                </ProtectedRoute>
-              }
+              path="/iniciarpartida"
+              element={<ProtectedRoute element={<IniciarPartida />} />}
             />
             <Route
-              path="/CerrarSesion"
-              element={
-                <ProtectedRoute>
-                  <CerrarSesion />
-                </ProtectedRoute>
-              }
+              path="/cerrarsesion"
+              element={<ProtectedRoute element={<CerrarSesion />} />}
             />
-            {/* Otras rutas protegidas */}
+
+            <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </div>
       </div>
