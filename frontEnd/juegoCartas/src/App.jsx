@@ -1,13 +1,13 @@
 import { useContext } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/login';
-//import Registro from './pages/registro'; // Supongamos que también tienes una página de registro
 import Sidebar from './components/sidebar';
 import { AuthContext } from './context/autenticacion';
 import Home from './pages/home';
 import CrearPartida from './pages/CrearPartida';
 import IniciarPartida from './pages/IniciarPartida';
 import CerrarSesion from './pages/CerrarSesion';
+import { Register } from './components/reggister';
 
 const ProtectedRoute = ({ element }) => {
   const { isAuthenticated } = useContext(AuthContext);
@@ -37,7 +37,7 @@ function App() {
           <Routes>
       
             <Route path="/" element={<PublicRoute element={<Login />} />} />
-            {/* <Route path="/registro" element={<PublicRoute element={<Registro />} />} /> */}
+             <Route path="/registro" element={<PublicRoute element={<Register />} />} /> 
 
         
             <Route
@@ -61,6 +61,7 @@ function App() {
           </Routes>
         </div>
       </div>
+  
     </BrowserRouter>
   );
 }

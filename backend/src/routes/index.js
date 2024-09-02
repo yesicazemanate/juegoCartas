@@ -1,9 +1,10 @@
 import express from 'express';
 
 import routerUser from './user.js'
+import routerPartida from './partida.js'
 import { createPuntaje, updatePuntajeByIdUser, getPuntajeByIdUser, getPuntajes, deletePuntajeByIdUser } from "../controllers/Puntaje.js";
 const router = express.Router();
-
+router.use('/partida', routerPartida)
 router.use('/user', routerUser)
 
 
