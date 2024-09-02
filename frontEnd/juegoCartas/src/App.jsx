@@ -9,7 +9,7 @@ import CrearPartida from './pages/CrearPartida';
 import IniciarPartida from './pages/IniciarPartida';
 import CerrarSesion from './pages/CerrarSesion';
 import ProtectedRoute from './pages/RutasProtegidas';
-
+import { Register } from './components/reggister';
 function App() {
   const { isAuthenticated } = useContext(AuthContext);
 
@@ -25,6 +25,7 @@ function App() {
         <div className='ml-5 p-14 w-full'>
           <Routes>
             <Route path="/" element={<Login />} />
+            <Route path='/register' element={<Register/>}/>
             <Route
               path="/home"
               element={
@@ -61,6 +62,7 @@ function App() {
           </Routes>
         </div>
       </div>
+  
     </BrowserRouter>
   );
 }
