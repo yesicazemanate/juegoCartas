@@ -24,3 +24,17 @@ res.status(201).json(newUser);
         res.status(500).json({ message: 'Failed to create user', error: error.message });
     }
  }
+ export const obtenerUserId=async(req, res)=>{
+    const {id}= req.params 
+    try{
+const user = await User.findById(id)
+if(!user){
+    return res.status(400).send('usuario no encontrado')
+}
+return res.status(200).send(user)
+    }catch(error){
+        console.log(error)
+        return res.status(500).send(error)
+    }
+ }
+
