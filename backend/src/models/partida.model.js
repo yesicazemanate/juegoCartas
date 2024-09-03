@@ -15,7 +15,7 @@ const partidaShema= moongose.Schema({
         type: String,
         require: false
     },
-    idCreador:{
+    codigo:{
         type: String,
         require:false
     }

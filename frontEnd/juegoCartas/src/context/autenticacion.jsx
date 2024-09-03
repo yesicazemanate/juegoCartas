@@ -13,8 +13,8 @@ export const AuthProvider = ({ children }) => {
       const response = await axios.post('http://localhost:8089/user/inicioSesion', { email, password });
       const token = response.data.token;
       setToken(token);
-      Cookies.set('token', token, { expires: 1 / 24 }); // Expira en 1 hora
-      setIsAuthenticated(true);  // Actualizar el estado de autenticación
+      Cookies.set('token', token, { expires: 1 });
+      setIsAuthenticated(true); 
     } catch (error) {
       console.error('Error al iniciar sesión:', error.response?.data || error.message);
     }
