@@ -1,19 +1,44 @@
 import TotalDeJugadores from "../components/TotalDeJugadores";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 const CrearPartida = () => {
    const navigate = useNavigate()
+    const random = ['1','2','3','4','5','6','7','8','9','0','c','a','b']
+
+   const codigoRandom = ()=>{
+      let codis = ''
+      for (let index = 0; index < 6; index++) {
+        const code = Math.floor(Math.random()* random.length)
+       codis += random[code];
+      }
+      return codis;
+     
+   }
+   const [codigo, setCodigo] = useState(codigoRandom())
    const [modal, setModal] = useState({open:false, number:null})
+   const palabraNueva = codigoRandom()
+   const [nombrePartida, setNombrePartida] = useState("");
    const abrir = (number)=>{
       setModal({open:true, number})
+      setCodigo(palabraNueva);
    }
    const cerrar = ()=>{
       setModal({open:false, number:null})
    }
    const aceptar =()=>{
       if(modal.number !== null){
-         localStorage.setItem("Numero de jugadores: " , modal.number)
-         navigate('/pruebaa')
+       axios.post('http://localhost:8089/partida/',{
+         codigo: codigo,
+         nombrePartida: nombrePartida
+       })
+       .then(() => {
+         localStorage.setItem('Numero de jugadores', modal.number);
+         navigate('/pruebaa');
+     })
+     .catch((error) => {
+         console.error('Error al crear la partida:', error);
+     });
       }
    }
    return (
@@ -33,10 +58,19 @@ const CrearPartida = () => {
            {
             modal.open &&(
                <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-               <div className="bg-white p-6 rounded-lg shadow-lg">
-                 <h2 className="text-xl font-semibold mb-4">¿Estas seguro de crear la partida? </h2>
-                 <p>Total de jugadores {modal.number}.</p>
-                 <button
+               <div className="bg-white  p-6 rounded-lg shadow-lg">
+                 <h2 className="text-xl  text-center font-semibold mb-4">¿Estas seguro de crear la partida? </h2>
+                 <p className="mt-3 mb-4 text-center">Total de jugadores {modal.number}.</p>
+                 <div className="flex flex-row mb-7 gap-5 justify-center items-center">
+                 <h2 className="">Nombre de partida:</h2>
+                 <input value={nombrePartida} onChange={(e) => setNombrePartida(e.target.value)} className="border-2 p-2 border-black rounded-lg"/>
+                 </div>
+                 <div className="flex gap-4 flex-row justify-center items-center">
+                  <p>Tu codigo :</p>
+                  <p className="border-2 p-1 rounded-lg">{codigo}</p>
+                 </div>
+                  <div className="flex flex-row gap-9 justify-center items-center">
+                  <button
                    onClick={aceptar}
                    className="mr-8 mt-4 bg-blue-500 text-white px-4 py-2 rounded"
                  >Aceptar</button>
@@ -46,7 +80,9 @@ const CrearPartida = () => {
                  >
                    Cancelar
                  </button>
-               </div>
+              
+                  </div>
+ </div>
              </div>
             )
            }

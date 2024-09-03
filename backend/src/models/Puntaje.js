@@ -12,7 +12,7 @@ const puntajeSchema = moongose.Schema({
     },
     usuarios:{
         type:String,
-        require: true,
+        require: true, //Se quita
         trim:true
     }
 })
