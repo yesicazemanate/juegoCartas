@@ -19,5 +19,5 @@ const verifyToken =(token)=>{
 }
 export{
     GenerarToken,
-    verifyToken
+    verifyToken 
 }
