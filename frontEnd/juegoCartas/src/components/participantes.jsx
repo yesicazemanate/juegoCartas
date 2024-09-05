@@ -17,20 +17,24 @@ export const Participantes = () => {
   useEffect(()=>{
     const fetchUsers = async () => {
       try {
-        const responses = await Promise.all(
-          data.map(async (user) => {
-            const response = await axios.get(`http://localhost:8089/user/${user.iduser}`);
-            return response.data;  
-          })
-        );
-        console.log(responses);  
+        if(data){
+          const responses = await Promise.all(
+            data.map(async (user) => {
+              const response = await axios.get(`http://localhost:8089/user/${user.iduser}`);
+              return response.data;  
+            })
+          );
+         setUser(responses)  
+        }
+        
       } catch (error) {
         console.error('Error fetching users:', error);
       }
     };
   
     fetchUsers();
-  },[data])
+  },[idPartida])
+  console.log(user)
   return (
     <div>Participantes</div>
   )
