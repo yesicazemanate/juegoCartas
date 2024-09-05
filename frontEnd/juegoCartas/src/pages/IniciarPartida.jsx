@@ -1,22 +1,80 @@
 
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Participantes } from "../components/participantes";
+
 const IniciarPartida = () => {
-   const navigate = useNavigate()
-   const [modall, setModal] = useState({isOpen:false, number: null})
-  //  const abrirModal =(number)=>{
-  //     setModal({isOpen:true, number})
-  //  }
+  const navigate = useNavigate()
+  const [modall, setModal] = useState({isOpen:false, number: null})
+  const token = document.cookie.split('=')[1];
+  const [iduser, setIduser]= useState()
+  const [codigo, setCodigo]=useState()
+  const [alert, setAlert]= useState()
+  const [idpartida, setPartida]= useState()
+ 
+  useEffect(()=>{
+const decodeToken =async()=>{
+  try{
+const response= await axios.post('http://localhost:8089/user/',{},{
+  headers:{
+     Authorization:token 
+  }
+})
+//console.log(response.data)
+setIduser(response.data.id)
+  }catch(error){
+console.log(error)
+  }
+}
+decodeToken()
+  },[])
+  //  console.log(iduser)
+  const compararCodigo=async(codigo)=>{
+try{
+const response = await axios.post('http://localhost:8089/partida/comparar',{
+  codigo
+})
+if(response.data.length > 0){
+  setAlert(false)
+  setPartida(response.data[0]._id)
+
+}else{
+  setAlert(true)
+}
+
+}catch(error){
+  console.log(error)
+}
+  }
+  console.log(iduser)
+const actualizarPartida=async()=>{
+  const user={
+    iduser
+  }
+  try{
+    const response = await axios.patch(`http://localhost:8089/partida/${idpartida}`,{
+      participantes:user
+    })
+    console.log(response)
+  }catch(error){
+    console.log(error)
+  }
+}
    const cerrarModal=()=>{
       setModal({isOpen:false, number:null})
       navigate('/home')
    }
-   const unirse =()=>{
-      if (modall.number !== null) {
+   const unirse =(codigo)=>{
+     compararCodigo(codigo)
+     actualizarPartida()
+     if (modall.number !== null) {
          localStorage.setItem("TotalJugadoresParaUnirse: ",modall.number);
+
          navigate('/pruebaa')
       }
    }
+  //  console.log(codigo)
     return(
       <>
           <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-gray-100 to-gray-300">
@@ -24,14 +82,20 @@ const IniciarPartida = () => {
      
         <div className="fixed w-full inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <div className="flex flex-col justify-center items-center w-96 bg-white p-6 rounded-lg shadow-lg">
+            {alert&&(
+              <h1 className="text-lg mb-4">El código proporcionado no pertenece a ninguna partida</h1>
+            )}
           <h2 className="text-center font-semibold text-2xl text-gray-700 mb-6">Escriba su codigo para inicarPartida</h2>
 
     
             <h2 className="text-lg mb-4">Debe tener 6 caracteres</h2>
-            <input className="border-2 p-2  border-black rounded-lg"/>
+            <input className="border-2 p-2  border-black rounded-lg"
+            value={codigo}
+            onChange={(e)=>setCodigo(e.target.value)}
+            />
             <div className="flex flex-row">
             <button
-              onClick={unirse}
+              onClick={()=>unirse(codigo)}
               className="mr-8 mt-4 bg-blue-500 text-white px-4 py-2 rounded"
             >Unirme</button>
             <button
