@@ -2,6 +2,7 @@ import TotalDeJugadores from "../components/TotalDeJugadores";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { number } from "prop-types";
 const CrearPartida = () => {
    const navigate = useNavigate()
     const random = ['1','2','3','4','5','6','7','8','9','0','c','a','b']
@@ -30,7 +31,8 @@ const CrearPartida = () => {
       if(modal.number !== null){
        axios.post('http://localhost:8089/partida/',{
          codigo: codigo,
-         nombrePartida: nombrePartida
+         nombrePartida: nombrePartida,
+         numeroParticipantes: modal.number
        })
        .then(() => {
          localStorage.setItem('Numero de jugadores', modal.number);

@@ -19,9 +19,11 @@ const partidaShema= moongose.Schema({
         type: String,
         require:false,
         unique:true
+    },
+    numeroParticipantes:{
+        type: Number,
+        require:false,
     }
-
-
 
 },
 {
