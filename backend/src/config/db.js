@@ -9,4 +9,4 @@ console.log("connection established to juegoCartas database")
     process.exit(1)
     }
 }
-export default connectionDB
+export default connectionDB  
