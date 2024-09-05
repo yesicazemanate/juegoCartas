@@ -12,7 +12,7 @@ const IniciarPartida = () => {
   const [codigo, setCodigo]=useState()
   const [alert, setAlert]= useState()
   const [idpartida, setPartida]= useState()
- 
+ const [pasar, setPasar]= useState()
   useEffect(()=>{
 const decodeToken =async()=>{
   try{
@@ -29,24 +29,29 @@ console.log(error)
 }
 decodeToken()
   },[codigo])
-  //  console.log(iduser)
-  const compararCodigo=async(codigo)=>{
-try{
-const response = await axios.post('http://localhost:8089/partida/comparar',{
-  codigo
-})
-if(response.data.length > 0){
-  setAlert(false)
-  setPartida(response.data[0]._id)
+useEffect(()=>{
+  const compararCodigo=async()=>{
+    try{
+    const response = await axios.post('http://localhost:8089/partida/comparar',{
+      codigo
+    })
+    if(response.data.length > 0){
+      setAlert(false)
+      setPartida(response.data[0]._id)
+      setPasar(true)
+    
+    }else{
+      setAlert(true)
+      setPasar(false)
+    }
+    
+    }catch(error){
+      console.log(error)
+    }
+      }
+      compararCodigo()
+},[codigo])
 
-}else{
-  setAlert(true)
-}
-
-}catch(error){
-  console.log(error)
-}
-  }
   console.log(idpartida)
 const actualizarPartida=async()=>{
   const user={
@@ -63,16 +68,19 @@ const actualizarPartida=async()=>{
 }
    const cerrarModal=()=>{
       setModal({isOpen:false, number:null})
+
       navigate('/home')
    }
-   const unirse =(codigo)=>{
-     compararCodigo(codigo)
+   const unirse =()=>{
+    //  compararCodigo()
      actualizarPartida()
-     if (modall.number !== null) {
-         localStorage.setItem("TotalJugadoresParaUnirse: ",modall.number);
+    //  if (modall.number !== null) {
+    //      localStorage.setItem("TotalJugadoresParaUnirse: ",modall.number);
+    if(pasar){
 
-         navigate('/pruebaa')
-      }
+      navigate('/pruebaa')
+    }
+    //   }
    }
   //  console.log(codigo)
     return(
@@ -96,7 +104,7 @@ const actualizarPartida=async()=>{
             <div className="flex flex-row">
             <div className="flex flex-row">
             <button
-              onClick={()=>unirse(codigo)}
+              onClick={()=>unirse()}
               className="mr-8 mt-4 bg-blue-500 text-white px-4 py-2 rounded"
             >Unirme</button>
               </div>
