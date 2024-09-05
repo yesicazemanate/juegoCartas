@@ -35,11 +35,14 @@ if (!partida) {
 }
 export const updatePartida=async(req, res)=>{
     const data=req.body
+    console.log(data)
     const {id}=req.params
     try{    
-const partida= await Partida.findByIdAndUpdate(id, data,{ new: true, runValidators: true })
+const partida= await Partida.findByIdAndUpdate(id, 
+    { $push: data },
+    { new: true, runValidators: true } )
 if(!partida) return res.status(400).send('partida no actualizada ')
-    return res.status(500).json({message:'partida actualizada', partida})
+    return res.status(200).json({message:'partida actualizada', partida})
     }catch(error){
         console.log(error)
         return res.status(500).send('error interno')
@@ -53,5 +56,24 @@ res.status(200).send('partida eliminada ')
     }catch(error){
         console.log(error)
         return res.status(500).send('error de servidor')
+    }
+}
+export const compararCodigo= async(req, res)=>{
+    const codigo=req.body.codigo
+    // console.log(codigo)
+    try{
+
+        if (!codigo) {
+            return res.status(400).send('Código no proporcionado.');
+        }
+const codi= await Partida.find({codigo:codigo})
+console.log(codi)
+if (!codi) {
+    return res.status(404).send('Código no encontrado.');
+}
+return res.status(200).send(codi)
+    }catch(error){
+        console.log(error)
+        return  res.status(500).send(error)
     }
 }

@@ -1,5 +1,6 @@
 import User from "../models/user.models.js";
 import {EncriptacionContra } from "../utils/bcrypt.js";
+import { verifyToken } from "../utils/jwthandle.js";
 export const createUser= async(req, res)=>{
     const {
         usuario,
@@ -37,4 +38,22 @@ return res.status(200).send(user)
         return res.status(500).send(error)
     }
  }
+export const decodeToken =async(req, res)=>{
+    const authHeader = req.headers.authorization;
+// console.log(authHeader)
+    if (!authHeader) {
+        return res.status(401).send('Token no proporcionado.');
+    }
 
+    try{
+const tokenDecoded = verifyToken(authHeader)
+// console.log(tokenDecoded)
+if(!tokenDecoded){
+    return res.status(401).send('Acceso denegado.');
+}
+return res.status(200).send(tokenDecoded)
+    }catch(error){
+console.log(error)
+return res.status(500).json({message:error})
+    }
+}

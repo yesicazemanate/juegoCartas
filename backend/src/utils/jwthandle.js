@@ -6,11 +6,11 @@ const JWT_SECRET = 'tu_clave_secreta';
         id: user._id,
         correo: user.email
     };
-    return jwt.sign(payload, JWT_SECRET, { expiresIn: '1h' });
+    return jwt.sign(payload, JWT_SECRET, { expiresIn: '1d' });
 };
-const verifyToken =(jwt)=>{
+const verifyToken =(token)=>{
     try{
-        const isVerify=jwt.verify(jwt, JWT_SECRET)
+        const isVerify=jwt.verify(token, JWT_SECRET)
         return isVerify
     }catch(error){
         console.error('token verification failed', error)

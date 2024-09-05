@@ -17,7 +17,8 @@ const partidaShema= moongose.Schema({
     },
     codigo:{
         type: String,
-        require:false
+        require:false,
+        unique:true
     }
 
 
