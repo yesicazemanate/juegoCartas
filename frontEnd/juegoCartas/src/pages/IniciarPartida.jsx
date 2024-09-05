@@ -28,7 +28,7 @@ console.log(error)
   }
 }
 decodeToken()
-  },[])
+  },[codigo])
   //  console.log(iduser)
   const compararCodigo=async(codigo)=>{
 try{
@@ -47,7 +47,7 @@ if(response.data.length > 0){
   console.log(error)
 }
   }
-  console.log(iduser)
+  console.log(idpartida)
 const actualizarPartida=async()=>{
   const user={
     iduser
@@ -94,10 +94,12 @@ const actualizarPartida=async()=>{
             onChange={(e)=>setCodigo(e.target.value)}
             />
             <div className="flex flex-row">
+            <div className="flex flex-row">
             <button
               onClick={()=>unirse(codigo)}
               className="mr-8 mt-4 bg-blue-500 text-white px-4 py-2 rounded"
             >Unirme</button>
+              </div>
             <button
               onClick={cerrarModal}
               className="mt-4 bg-red-500 text-white px-4 py-2 rounded"
