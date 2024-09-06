@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+
 //import io from "socket.io-client";
-import TarjetasPoke from "../components/TarjetasPokemon";
-import axios from "axios";
+
 
 const CerrarSesion = () => {
     // const [mensaje, setMensaje] = useState('');
@@ -11,34 +10,7 @@ const CerrarSesion = () => {
     // const [miTurno, setMiTurno] = useState(false);
     // const [miId, setMiId] = useState('');
     // const [socket, setSocket] = useState(null);
-    const [pokemons, setPokemons] = useState([]);
-
-  useEffect(() => {
-    const fetchPokemons = async () => {
-      try {
-        const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=56'); 
-        const pokemonList = response.data.results;
-        
-        const detailedPokemons = await Promise.all(
-          pokemonList.map(async (pokemon) => {
-            const pokemonDetail = await axios.get(pokemon.url);
-            return {
-              name: pokemonDetail.data.name,
-              image: pokemonDetail.data.sprites.front_default,
-              ability: pokemonDetail.data.abilities[0]?.ability.name || 'N/A',
-              type: pokemonDetail.data.types[0]?.type.name || 'N/A',
-            };
-          })
-        );
-
-        setPokemons(detailedPokemons);
-      } catch (error) {
-        console.error('Error fetching Pokémon data:', error);
-      }
-    };
-
-    fetchPokemons();
-  }, []);
+    
 
     // useEffect(() => {
     //     const socketInstance = io("http://localhost:8089");
@@ -107,19 +79,7 @@ const CerrarSesion = () => {
             <p>Contenido para puntake.</p>
 
             <p>Ejemplo de Tarjetas</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center">
-            {pokemons.map((pokemon, index) => (
-        <TarjetasPoke
-          key={index}
-          name={pokemon.name}
-          imagen={pokemon.image}
-          alto='50'
-          ancho='48'
-          habilidad={pokemon.ability}
-          tipo={pokemon.type}
-        />
-      ))}
-            </div>
+           
             {/* <div>
                 <p>Socket</p>
                 <form onSubmit={handleSubmit}>
