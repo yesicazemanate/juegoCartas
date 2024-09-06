@@ -1,13 +1,14 @@
+import axios from "axios";
 import TotalDeJugadores from "../components/TotalDeJugadores";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-// import axios from "axios";
 import io from "socket.io-client";
 const socket = io('http://localhost:8089')
 
 
 const CrearPartida = () => {
+    const token = document.cookie.split('=')[1];
    
    const navigate = useNavigate();
    const random = ['1','2','3','4','5','6','7','8','9','0','c','a','b'];
@@ -25,6 +26,23 @@ const CrearPartida = () => {
    const [modal, setModal] = useState({open:false, number:null});
    const [nombrePartida, setNombrePartida] = useState("");
    const palabraNueva = codigoRandom();
+   const [idUser,setIdUser] = useState()
+
+   useEffect(()=>{
+    const tokenDecodificado = async()=>{
+        try{
+            const response = await axios.post('http://localhost:8089/user/',{},{
+                headers:{
+                    Authorization: token
+                }
+            });
+            setIdUser(response.data.id);
+        }catch(error){
+            console.log('Error en token ', error)
+        }
+    }
+    tokenDecodificado();
+},[token])
 
    const abrir = (number) => {
        setModal({open:true, number});
@@ -37,7 +55,8 @@ const CrearPartida = () => {
 
    const aceptar = () => {
        if(modal.number !== null){
-           socket.emit('crearPartida', { codigo, nombrePartida, numeroParticipantes: modal.number });
+        const participante = {idUser}
+           socket.emit('crearPartida', { codigo, nombrePartida, numeroParticipantes: modal.number, participante });
            navigate('/pruebaa');
        }
    };

@@ -26,6 +26,7 @@ const IniciarPartida = () => {
                     }
                 });
                 setIduser(response.data.id);
+                console.log(response.data.id)
             } catch (error) {
                 console.log('Error al decodificar el token:', error);
             }
