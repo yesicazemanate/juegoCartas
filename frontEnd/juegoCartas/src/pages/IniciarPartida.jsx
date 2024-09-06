@@ -3,7 +3,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PartidasDisponibles from "../components/PartidasDisponibles";
-
+import io from 'socket.io-client'
+const socket = io('http://localhost:8089')
 const IniciarPartida = () => {
   const navigate = useNavigate()
   const [modall, setModal] = useState({isOpen:false, numeroParticipantes: null, nombrePartida: null})
@@ -15,6 +16,14 @@ const IniciarPartida = () => {
  const [pasar, setPasar]= useState()
  const [datosPartida, setDatosPartida] = useState([])
  const [iamge,setImage] = useState('');
+//  useEffect(()=>{
+//   socket.on('connect', ()=>{
+//     console.log('conectado sockect.io')
+//   })
+//   return ()=>{
+//     socket.disconnect()
+//   }
+//  },[])
   useEffect(()=>{
 const decodeToken =async()=>{
   try{
@@ -30,6 +39,14 @@ console.log(error)
   }
 }
 decodeToken()
+socket.emit('joinRoom', { iduser });
+
+socket.on('updatewaitingRoom', (users) => {
+  setWaitingRoomUsers(users);  
+});
+return () => {
+  socket.off('updatewaitingRoom');  
+}
   },[codigo])
 useEffect(()=>{
   const compararCodigo=async()=>{
@@ -55,7 +72,7 @@ useEffect(()=>{
       compararCodigo()
 },[codigo])
 
-  console.log(idpartida)
+  // console.log(idpartida)
 const actualizarPartida=async()=>{
   const user={
     iduser
@@ -65,6 +82,7 @@ const actualizarPartida=async()=>{
       participantes:user
     })
     console.log(response)
+    
   }catch(error){
     console.log(error)
   }
