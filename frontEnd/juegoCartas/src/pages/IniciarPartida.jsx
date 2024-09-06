@@ -74,7 +74,6 @@ const actualizarPartida=async()=>{
    }
    const unirse =()=>{
      actualizarPartida()
-
     if(pasar){
       localStorage.setItem('idpartida',idpartida)
       navigate('/pruebaa')
