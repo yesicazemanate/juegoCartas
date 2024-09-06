@@ -106,10 +106,10 @@ const abrirParticipantesModal = (nombrePartida, numeroParticipantes) => {
 };
 
 const iamgenPokemon = [
-  'buo.png',
-  'fuego.png',
-  'tortuga.png',
-  'zorrito.png'
+  '/buo.png',
+  '/fuego.png',
+  '/tortuga.png',
+  '/zorrito.png'
 ]
   
   //  console.log(codigo)
@@ -159,7 +159,7 @@ const iamgenPokemon = [
                 nombrePartida={partida.nombrePartida}
                 numeroParticipantes={partida.numeroParticipantes}
                 modal={abrirParticipantesModal}
-                imagenPokemon={imagenPokemon} // Pasar la imagen correspondiente
+                imagenPokemon={imagenPokemon[index % imagenPokemon.length]} // Pasar la imagen correspondiente
               />
             );
           })}

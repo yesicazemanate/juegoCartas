@@ -1,5 +1,6 @@
 
 export default function PartidasDisponibles({modal ,nombrePartida, numeroParticipantes, imagenPokemon}) {
+  
   return (
     <div  onClick={()=>modal(nombrePartida, numeroParticipantes)} className="flex flex-col justify-center items-center">
         <div className="relative cursor-pointer bg-gradient-to-r from-blue-500 to-indigo-600 p-6 rounded-xl border-white border-2 w-40 shadow-lg transform transition-transform hover:scale-105">
