@@ -7,6 +7,7 @@ import { Server as SocketServer } from "socket.io";
 import http from "http";
 import { initializeSocket } from './src/socket/socket.js'
 import { CrearPartidaSocket } from "./src/socket/crearPaartidaSocket.js";
+import { CartasTiradasPorUser } from "./src/socket/CartasTiradasPorUser.js";
 
 
 dotenv.config()
@@ -46,5 +47,6 @@ const io = new SocketServer(server,{
   }
 })
 
-CrearPartidaSocket(io)
+CrearPartidaSocket(io);
+CartasTiradasPorUser(io);
 //initializeSocket(io)
