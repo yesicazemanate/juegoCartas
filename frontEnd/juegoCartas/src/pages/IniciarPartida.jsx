@@ -23,7 +23,7 @@ const response= await axios.post('http://localhost:8089/user/',{},{
      Authorization:token 
   }
 })
-//console.log(response.data)
+
 setIduser(response.data.id)
   }catch(error){
 console.log(error)
@@ -40,6 +40,7 @@ useEffect(()=>{
     if(response.data.length > 0){
       setAlert(false)
       setPartida(response.data[0]._id)
+    
       setPasar(true)
     
     }else{
@@ -89,13 +90,12 @@ const cerrarModal=()=>{
       navigate('/iniciarpartida')
 }
 
-const unirse =()=>{
-    //  compararCodigo()
-     actualizarPartida()
-    //  if (modall.number !== null) {
-    //      localStorage.setItem("TotalJugadoresParaUnirse: ",modall.number);
-    if(pasar){
 
+   const unirse =()=>{
+     actualizarPartida()
+
+    if(pasar){
+      localStorage.setItem('idpartida',idpartida)
       navigate('/pruebaa')
     }
    
@@ -113,6 +113,8 @@ const iamgenPokemon = [
 ]
   
   //  console.log(codigo)
+  
+
     return(
       <>
           <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-gray-100 to-gray-300">
