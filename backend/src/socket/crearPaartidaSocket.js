@@ -16,6 +16,8 @@ export const CrearPartidaSocket = (io) => {
                     codigo: data.codigo,
                     nombrePartida: data.nombrePartida,
                     numeroParticipantes: data.numeroParticipantes,
+                    participantes: [data.participante]
+
                 });
 
                 await nuevaPartida.save();

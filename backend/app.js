@@ -7,6 +7,7 @@ import { Server as SocketServer } from "socket.io";
 import http from "http";
 import { initializeSocket } from './src/socket/socket.js'
 import { CrearPartidaSocket } from "./src/socket/crearPaartidaSocket.js";
+import { CartasTiradasPorUser } from "./src/socket/CartasTiradasPorUser.js";
 import { inicioPartida } from './src/socket/iniciarPartidaSocket.js'
 
 dotenv.config()
@@ -49,5 +50,6 @@ server.listen(port, ()=>{
     console.log(`server working port ${port}`)  
 }) 
 
-CrearPartidaSocket(io)
+CrearPartidaSocket(io);
+CartasTiradasPorUser(io);
 //initializeSocket(io)
