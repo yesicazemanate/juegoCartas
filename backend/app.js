@@ -6,6 +6,8 @@ import routes from '../backend/src/routes/index.js'
 import { Server as SocketServer } from "socket.io";
 import http from "http";
 import { initializeSocket } from './src/socket/socket.js'
+import { CrearPartidaSocket } from "./src/socket/crearPaartidaSocket.js";
+
 
 dotenv.config()
 const allowedDomains =['http://localhost:5173']
@@ -19,15 +21,13 @@ const corsOptions ={
     },
     methods: ['GET', 'POST', 'PUT', 'DELETE','PATCH'], 
   allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
 }
 
 const app = express()
 const server = http.createServer(app);
-const io = new SocketServer(server,{ 
-  cors:{
-    origin:"http://localhost:5173" //Colocar la ruta de front para problemas de cors
-  }
-})
+
+
 const port = process.env.PORT || 8089;
 db()
 app.use(cors(corsOptions))
@@ -35,7 +35,16 @@ app.use(express.json())
 app.use(routes)
 
 
-  initializeSocket(io)
+
 server.listen(port, ()=>{
     console.log(`server working port ${port}`)  
 }) 
+const io = new SocketServer(server,{ 
+  cors:{
+    origin:"http://localhost:5173/", //Colocar la ruta de front para problemas de cor
+    methods: ["GET", "POST"],
+  }
+})
+
+CrearPartidaSocket(io)
+//initializeSocket(io)
