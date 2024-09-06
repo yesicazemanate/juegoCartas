@@ -7,10 +7,10 @@ io.on('connection', socket => {
   if (!jugadores.some(jugador => jugador.id === socket.id)) {
     jugadores.push({ id: socket.id, nombre: `Jugador ${jugadores.length + 1}` });
 }
-console.log(jugadores);
+// console.log(jugadores);
 
 socket.emit('estadoInicial', { jugadores, cartasEnJuego, currentTurn });
-console.log(`Estado inicial enviado a ${socket.id}: jugadores = ${jugadores.length}, currentTurn = ${currentTurn}`);
+// console.log(`Estado inicial enviado a ${socket.id}: jugadores = ${jugadores.length}, currentTurn = ${currentTurn}`);
 
 
     // Lógica para manejar la carta jugada
@@ -35,7 +35,7 @@ console.log(`Estado inicial enviado a ${socket.id}: jugadores = ${jugadores.leng
       const esSuTurno = jugadores[currentTurn]?.id === socket.id;
   
       jugadores = jugadores.filter(jugador => jugador.id !== socket.id);
-      console.log("Desconectado Socket:", socket.id);
+    //   console.log("Desconectado Socket:", socket.id);
   
       if (jugadores.length === 0) {
           cartasEnJuego = []; // Reinicia el juego si todos se desconectan
