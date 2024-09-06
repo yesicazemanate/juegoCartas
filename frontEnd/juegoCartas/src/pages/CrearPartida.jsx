@@ -1,56 +1,46 @@
 import TotalDeJugadores from "../components/TotalDeJugadores";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+
+// import axios from "axios";
+import io from "socket.io-client";
+const socket = io('http://localhost:8089')
+
+
 const CrearPartida = () => {
-   const navigate = useNavigate()
-    const random = ['1','2','3','4','5','6','7','8','9','0','c','a','b']
+   
+   const navigate = useNavigate();
+   const random = ['1','2','3','4','5','6','7','8','9','0','c','a','b'];
 
-   const codigoRandom = ()=>{
-      let codis = ''
-      for (let index = 0; index < 6; index++) {
-        const code = Math.floor(Math.random()* random.length)
-       codis += random[code];
-      }
-      return codis;
-     
-   }
-   const [codigo, setCodigo] = useState(codigoRandom())
-   const [modal, setModal] = useState({open:false, number:null})
-   const palabraNueva = codigoRandom()
+   const codigoRandom = () => {
+       let codis = '';
+       for (let index = 0; index < 6; index++) {
+           const code = Math.floor(Math.random()* random.length);
+           codis += random[code];
+       }
+       return codis;
+   };
+
+   const [codigo, setCodigo] = useState(codigoRandom());
+   const [modal, setModal] = useState({open:false, number:null});
    const [nombrePartida, setNombrePartida] = useState("");
-   const abrir = (number)=>{
-      setModal({open:true, number})
-      setCodigo(palabraNueva);
-   }
-   const cerrar = ()=>{
-      setModal({open:false, number:null})
-   }
-   const aceptar =()=>{
-      if(modal.number !== null){
-       axios.post('http://localhost:8089/partida/',{
-         codigo: codigo,
-         nombrePartida: nombrePartida,
-         numeroParticipantes: modal.number
-       })
+   const palabraNueva = codigoRandom();
 
-       .then((response) => {
-        const partidaId = response.data._id;
+   const abrir = (number) => {
+       setModal({open:true, number});
+       setCodigo(palabraNueva);
+   };
 
-      console.log(response.data); 
-      console.log('ID de la partida:', partidaId); 
-      localStorage.setItem('PartidaIdCreada', partidaId);
+   const cerrar = () => {
+       setModal({open:false, number:null});
+   };
 
-
-         localStorage.setItem('Numero de jugadores', modal.number);
-         
-         navigate('/pruebaa');
-     })
-     .catch((error) => {
-         console.error('Error al crear la partida:', error);
-     });
-      }
-   }
+   const aceptar = () => {
+       if(modal.number !== null){
+           socket.emit('crearPartida', { codigo, nombrePartida, numeroParticipantes: modal.number });
+           navigate('/pruebaa');
+       }
+   };
    return (
        <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-gray-100 to-gray-300">
            <div className="w-5/6 max-w-5xl bg-white shadow-lg rounded-3xl p-8 flex flex-col items-center">

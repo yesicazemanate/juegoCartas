@@ -3,26 +3,26 @@ import moongose, { Schema } from "mongoose"
 const partidaShema= moongose.Schema({
     nombrePartida:{
         type:String,
-        require:true,
+        required:true,
         trim:true
     },
     participantes:{
         type: Schema.Types.Mixed,
-        require:false,
+        required:false,
         trim:true
     },
     tiempo:{
         type: String,
-        require: false
+        required: false
     },
     codigo:{
         type: String,
-        require:false,
+        required:false,
         unique:true
     },
     numeroParticipantes:{
         type: Number,
-        require:false,
+        required:false,
     }
 
 },
