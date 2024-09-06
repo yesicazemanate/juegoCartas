@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+
 const JWT_SECRET = 'tu_clave_secreta'; 
 
  const GenerarToken = (user) => {
@@ -17,6 +18,8 @@ const verifyToken =(token)=>{
         return null
     }
 }
+
+
 export{
     GenerarToken,
     verifyToken 

@@ -9,6 +9,7 @@ import IniciarPartida from './pages/IniciarPartida';
 import CerrarSesion from './pages/CerrarSesion';
 import { Register } from './components/reggister';
 import Pruebaa from "./pages/PruebaCAMBIONUMERO";
+import SalaJuego from "./pages/Salajuego";
 
 const ProtectedRoute = ({ element }) => {
   const { isAuthenticated } = useContext(AuthContext);
@@ -39,6 +40,7 @@ function App() {
       
             <Route path="/" element={<PublicRoute element={<Login />} />} />
              <Route path="/registro" element={<PublicRoute element={<Register />} />} /> 
+             <Route path="/sala" element={<PublicRoute element={<SalaJuego />} />} /> 
 
         
             <Route

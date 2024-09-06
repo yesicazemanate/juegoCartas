@@ -1,7 +1,7 @@
 import axios from "axios"
 import { Participantes } from "../components/participantes"
-import { useEffect } from "react"
-u
+import { useEffect ,useState} from "react"
+
 export default function PruebaCAMBIONUMERO() {
   const idPartida= localStorage.getItem('idpartida')
   const [data, setData]= useState()
@@ -38,7 +38,7 @@ export default function PruebaCAMBIONUMERO() {
   
     fetchUsers();
   },[idPartida])
-console.log(user);
+//console.log(user);
   return (
     <div>
       <Participantes/>
