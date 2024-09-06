@@ -111,6 +111,10 @@ const iamgenPokemon = [
   '/tortuga.png',
   '/zorrito.png'
 ]
+const radnomImage = (index) => {
+  const imageIndex = index % iamgenPokemon.length; // Para hacer que las imágenes se repitan
+  return `/images/pokemon/${iamgenPokemon[imageIndex]}`; // Ruta relativa a la carpeta public
+};
   
   //  console.log(codigo)
   
@@ -154,14 +158,13 @@ const iamgenPokemon = [
          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
         {
            datosPartida && datosPartida.map((partida, index)=>{
-            const imagenPokemon = iamgenPokemon[index % iamgenPokemon.length]; // Obtener la imagen correspondiente
             return (
               <PartidasDisponibles
                 key={partida._id}
                 nombrePartida={partida.nombrePartida}
                 numeroParticipantes={partida.numeroParticipantes}
                 modal={abrirParticipantesModal}
-                imagenPokemon={imagenPokemon[index % imagenPokemon.length]} // Pasar la imagen correspondiente
+                imagenPokemon={radnomImage(index)} 
               />
             );
           })}
