@@ -5,7 +5,7 @@ import db from '../backend/src/config/db.js'
 import routes from '../backend/src/routes/index.js'
 import { Server as SocketServer } from "socket.io";
 import http from "http";
-import { initializeSocket } from './src/utils/socket.js'
+import { initializeSocket } from './src/socket/socket.js'
 
 dotenv.config()
 const allowedDomains =['http://localhost:5173']
