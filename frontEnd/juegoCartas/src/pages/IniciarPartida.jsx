@@ -93,7 +93,6 @@ const cerrarModal=()=>{
 
    const unirse =()=>{
      actualizarPartida()
-
     if(pasar){
       localStorage.setItem('idpartida',idpartida)
       navigate('/pruebaa')
