@@ -1,7 +1,7 @@
 let waitingRoomUsers=[]
  export const inicioPartida =(io)=>{
 io.on('connection', (socket)=>{
-    console.log('usuario conectado')
+    // console.log('usuario conectado')
     socket.on('joinRomm', (user)=>{
         waitingRoomUsers.push(user)
         io.emit('updatewaitingRoom', waitingRoomUsers)
