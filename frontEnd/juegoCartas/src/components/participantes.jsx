@@ -17,41 +17,23 @@ export const Participantes = () => {
   },[idPartida])
   //console.log(data)
   
-  useEffect(()=>{
-    const fetchUsers = async () => {
-      try {
-        if(data){
-          const responses = await Promise.all(
-            data.map(async (user) => {
-              const response = await axios.get(`http://localhost:8089/user/${user.iduser}`);
-              return response.data;  
-            })
-          );
-          console.log(responses)
-         setUser(responses)  
-        }
-        
-      } catch (error) {
-        console.error('Error fetching users:', error);
-      }
-    };
   
-    fetchUsers();
-  },[idPartida])
   useEffect(() => {
-   
-    socket.on('updatewaitingRoom', (updatedUsers) => {
-      setData(updatedUsers); 
-    });
-
-    return () => {
-      socket.off('updatewaitingRoom'); 
-    };
-  }, []);
-  // console.log(user)
+   if(data){
+     socket.emit('joinRoom', data)
+    }
+    socket.on('updateWaitingRoom',(data)=>{
+      console.log('Datos recibidos del servidor: ', data )
+      setUser(data)
+    })
+    socket.on('updateWaitingRoom')
+         return () => {
+           socket.off('updateWaitingRoom');
+         };
+  },[data]);
+  console.log(user);
   return (
     <div>
-    <h2>Participantes</h2>
     {user.length > 0 ? (
       <ul>
         {user.map((users, index) => (

@@ -1,8 +1,12 @@
 
 
-export default function TarjetasPokemon({name, imagen, tipo, alto, ancho, habilidad}) {
+export default function TarjetasPokemon({name, imagen, tipo, alto, ancho, habilidad, onClick}) {
+  const handleClick = () => {
+    console.log('Carta clickeada:', { name, imagen, habilidad, tipo }); // Ver la carta clickeada
+    if (onClick) onClick();
+  };
   return (
-    <div className="bg-white w-56 rounded-2xl shadow-lg p-4 max-w-xs transform transition-transform hover:scale-105">
+    <div onClick={handleClick} className="cursor-pointer bg-white w-56 rounded-2xl shadow-lg p-4 max-w-xs transform transition-transform hover:scale-105">
     <img
       src={imagen}
       alt={name}

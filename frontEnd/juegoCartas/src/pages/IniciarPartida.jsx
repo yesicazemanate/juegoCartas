@@ -19,7 +19,7 @@ const IniciarPartida = () => {
   const [pasar, setPasar] = useState();
   const [datosPartida, setDatosPartida] = useState([]);
   const [iamge, setImage] = useState("");
-  useEffect(() => {
+ /* useEffect(() => {
     socket.on("connect", () => {
       console.log("conectado sockect.io");
     });
@@ -27,7 +27,7 @@ const IniciarPartida = () => {
       socket.off("connect");
       socket.off("disconnect");
     };
-  }, []);
+  }, []);*/
   useEffect(() => {
     const decodeToken = async () => {
       try {
@@ -47,14 +47,14 @@ const IniciarPartida = () => {
       }
     };
     decodeToken();
-    socket.emit("joinRoom", { iduser });
+    //socket.emit("joinRoom", { iduser });
 
-    socket.on("updatewaitingRoom", (users) => {
+   /* socket.on("updatewaitingRoom", (users) => {
       setWaitingRoomUsers(users);
     });
     return () => {
       socket.off("updatewaitingRoom");
-    };
+    };*/
   }, [codigo]);
   useEffect(() => {
     const compararCodigo = async () => {
@@ -93,6 +93,7 @@ const IniciarPartida = () => {
           participantes: user,
         }
       );
+     // socket.emit('joinRoom', iduser);
       console.log(response);
     } catch (error) {
       console.log(error);
@@ -101,7 +102,7 @@ const IniciarPartida = () => {
   const traerPartidas = async () => {
     try {
       const data = await axios.get("http://localhost:8089/partida/");
-      console.log("datooos : ", data.data);
+     // console.log("datooos : ", data.data);
       setDatosPartida(data.data);
     } catch (error) {
       console.log(error);
