@@ -65,10 +65,10 @@ const IniciarPartida = () => {
             codigo,
           }
         );
+        console.log(response.data)
         if (response.data.length > 0) {
           setAlert(false);
           setPartida(response.data[0]._id);
-
           setPasar(true);
         } else {
           setAlert(true);
@@ -81,7 +81,7 @@ const IniciarPartida = () => {
     compararCodigo();
   }, [codigo]);
 
-  // console.log(idpartida)
+   console.log(idpartida)
   const actualizarPartida = async () => {
     const user = {
       iduser,
