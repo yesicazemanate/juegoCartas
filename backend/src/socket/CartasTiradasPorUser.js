@@ -1,7 +1,7 @@
 
 export const CartasTiradasPorUser = (io)=>{
     io.on('connection', (socket)=>{
-        console.log(`user Cartas: ${socket.id}`)
+        //console.log(`user Cartas: ${socket.id}`)
 
         socket.on('CartasSeleccionada', (card)=>{
             console.log(`Carta Jugada : ${card}`)

@@ -3,11 +3,7 @@ import { Server as SocketServer } from "socket.io";
 
 export const CrearPartidaSocket = (io) => {
     io.on('connection', (socket) => {
-<<<<<<< HEAD
-        // console.log(`usuario conectado :${socket.id}`);
-=======
         //console.log(`usuario conectado :${socket.id}`);
->>>>>>> 15c3a1435fc28e70975ea5527e2947f74d270e6f
 
         socket.on('crearPartida', async (data) => {
             try {
