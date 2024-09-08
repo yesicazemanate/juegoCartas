@@ -49,9 +49,6 @@ const IniciarPartida = () => {
     decodeToken();
     socket.emit("joinRoom", { iduser });
 
-    // socket.on("updatewaitingRoom", (users) => {
-    //  // setWaitingRoomUsers(users);
-    // });
     return () => {
       socket.off("updatewaitingRoom");
     };
