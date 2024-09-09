@@ -81,6 +81,8 @@ const IniciarPartida = () => {
     compararCodigo();
   }, [codigo]);
 
+
+  
    console.log(idpartida)
   const actualizarPartida = async () => {
     const user = {

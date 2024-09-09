@@ -40,7 +40,10 @@ function App() {
       
             <Route path="/" element={<PublicRoute element={<Login />} />} />
              <Route path="/registro" element={<PublicRoute element={<Register />} />} /> 
-             <Route path="/sala" element={<PublicRoute element={<SalaJuego />} />} /> 
+             <Route 
+             path="/sala" 
+              element={<SalaJuego />}
+             /> 
 
         
             <Route

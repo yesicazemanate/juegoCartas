@@ -5,7 +5,7 @@ import io from 'socket.io-client';
 const socket = io('http://localhost:8089');
 export const Participantes = () => {
   const idPartida= localStorage.getItem('idpartida')
-  const [data, setData]= useState()
+  //const [data, setData]= useState()
   const [user, setUser]= useState([])
   
   useEffect(() => {
@@ -20,7 +20,7 @@ export const Participantes = () => {
          return () => {
            socket.off('updateWaitingRoom');
          };
-  },[]);
+  },[idPartida]);
   console.log(user);
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
