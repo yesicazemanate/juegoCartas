@@ -44,12 +44,12 @@ const io = new SocketServer(server,{
 })
 inicioPartida(io)
   initializeSocket(io)
+  CrearPartidaSocket(io);
+  CartasTiradasPorUser(io);
 
 
 server.listen(port, ()=>{
     console.log(`server working port ${port}`)  
 }) 
 
-CrearPartidaSocket(io);
-CartasTiradasPorUser(io);
-//initializeSocket(io)
+
